@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -269,11 +269,59 @@
     </div>
   </div>
 
+  <!-- QR Code Modal -->
+  <div class="modal-backdrop" id="qrModal" style="display: none;">
+    <div class="modal-card modal-qr-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-qrcode modal-icon"></i>
+          <div>
+            <h3 class="modal-title" id="qrModalTitle">สแกน QR Code เพื่อเปิดบนมือถือ</h3>
+            <span class="modal-subtitle" id="qrModalSubtitle">วิชา...</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeQrModal" title="ปิดหน้าต่าง">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body modal-qr-body">
+        <div class="qr-preview-box">
+          <div class="qr-image-wrapper">
+            <img id="qrCodeImg" src="" alt="QR Code สำหรับเข้าชมเว็บไซต์" class="qr-code-img" />
+            <div class="qr-spinner" id="qrSpinner">
+              <i class="fa-solid fa-circle-notch fa-spin"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="qr-hint-box">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span>ส่องกล้องมือถือเพื่อเปิดอ่านสรุปบทเรียนได้ทันทีโดยไม่ต้องพิมพ์ URL</span>
+        </div>
+
+        <div class="qr-url-box">
+          <input type="text" id="qrUrlInput" readonly class="qr-url-input" title="URL ของบทเรียน" />
+          <button class="btn btn-secondary btn-qr-copy" id="qrCopyBtn" title="คัดลอก URL">
+            <i class="fa-regular fa-copy"></i>
+            <span>คัดลอก</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a id="qrDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>เปิดในแท็บใหม่</span>
+        </a>
+        <button class="btn btn-secondary" id="qrCloseBtn">ปิด</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- JavaScript Modules -->
-  <script src="data/notes.js"></script>
-  <script src="app.js"></script>
+  <script src="data/notes.js?v=2"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>

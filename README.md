@@ -17,6 +17,21 @@
 
 ---
 
+## 📑 รายการชีทสรุปในระบบ (Available Knowledge Sheets)
+
+| รายวิชา / บทเรียน | สรุปเนื้อหาเด่น | ลิงก์เข้าชม (Live Demo) |
+|---|---|---|
+| **CS 3106 บทที่ 1: โครงสร้างระบบคอมพิวเตอร์** | สัญญาณนาฬิกา, Instruction Cycle, System Bus, DMA, Cache Mapping | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter1-Computer-System-Organization/) |
+| **CS 3106 บทที่ 2: ข้อมูลและระบบตัวเลข** | สัญญาณดิจิทัล 0/1, แปลงเลขฐาน, 1's & 2's Complement, รหัส ASCII | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter2-Data-and-Number-Systems/) |
+| **CS 3106 บทที่ 3: ชุดคำสั่งและการทำงานของ CPU** | OpCode/Operand, วงรอบ 8 สถานะ, ISA Design, 7 Addressing Modes | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter3-Cpu-Instruction-Set/) |
+| **CS 3106 บทที่ 4: ไมโครโปรเซสเซอร์และการประมวลผล** | CISC vs RISC, โครงสร้าง CU/ALU, Registers & Flags, Interrupt, CPU Simulators | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter4-Microprocessor-and-Process/) |
+| **CS 3106 บทที่ 5: ไมโครโปรเซสเซอร์และการเชื่อมต่อระบบบัส** | System Bus (Address/Data/Control), I/O Port Addressing, Interrupt Controller, DMA | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter5-Microprocessor-and-Bus-System/) |
+| **CS 3106 บทที่ 6: หน่วยคำนวณทางคณิตศาสตร์และตรรกะ (ALU)** | วงจรบวก Adder, Booth's Multiplier, Restoring Division, มาตรฐาน IEEE 754 | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter6-Arithmetic-and-Logic-Unit/) |
+| **CS 3106 บทที่ 7: หน่วยความจำ (Memory Unit)** | ลำดับขั้นหน่วยความจำ, SRAM/DRAM, Server DIMMs, แคช Mapping, Virtual Memory, Paging | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter7-Memory-Unit/) |
+| **020033401 ภาษาเพื่อการสื่อสารสำหรับครู** | วัจน/อวัจนภาษา, ทักษะ ฟัง พูด อ่าน เขียน, การจับใจความ และการเขียนสรุปความ | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Language-for-Communication-for-Teachers/) |
+
+---
+
 ## 🚀 วิธีเพิ่มหรือแก้ไขเว็บไซต์สรุปของคุณ
 
 เพียงเปิดไฟล์ [`data/notes.js`](data/notes.js) แล้วเพิ่มหรือแก้ไขข้อมูลใน Array `knowledgeSheetsData` ตามโครงสร้างนี้:

@@ -45,6 +45,17 @@ const elements = {
   howToAddModal: document.getElementById('howToAddModal'),
   closeHowToAddModal: document.getElementById('closeHowToAddModal'),
   gotItBtn: document.getElementById('gotItBtn'),
+  // QR Code Modal
+  qrModal: document.getElementById('qrModal'),
+  qrModalTitle: document.getElementById('qrModalTitle'),
+  qrModalSubtitle: document.getElementById('qrModalSubtitle'),
+  qrCodeImg: document.getElementById('qrCodeImg'),
+  qrSpinner: document.getElementById('qrSpinner'),
+  qrUrlInput: document.getElementById('qrUrlInput'),
+  qrCopyBtn: document.getElementById('qrCopyBtn'),
+  qrDirectLink: document.getElementById('qrDirectLink'),
+  closeQrModal: document.getElementById('closeQrModal'),
+  qrCloseBtn: document.getElementById('qrCloseBtn'),
   toastContainer: document.getElementById('toastContainer'),
   footerTotalNotes: document.getElementById('footerTotalNotes'),
   footerTotalCategories: document.getElementById('footerTotalCategories')
@@ -356,12 +367,12 @@ function createNoteCardElement(note, isFav) {
 
     <div class="card-footer">
       <div class="card-meta">
-        <div class="card-meta-item" title="วันที่อัปเดต">
+        <div class="card-meta-item card-meta-date" title="วันที่อัปเดต">
           <i class="fa-regular fa-clock"></i>
           <span>${formattedDate}</span>
         </div>
         ${note.sheetCount ? `
-          <div class="card-meta-item" title="ความยาวเนื้อหา">
+          <div class="card-meta-item card-meta-sheet" title="ความยาวเนื้อหา">
             <i class="fa-regular fa-file-lines"></i>
             <span>${note.sheetCount}</span>
           </div>
@@ -369,7 +380,10 @@ function createNoteCardElement(note, isFav) {
       </div>
 
       <div class="card-buttons">
-        <button class="btn-card-action btn-copy-link" data-url="${note.url}" title="คัดลอกลิงก์">
+        <button class="btn-card-action btn-qr-code" data-id="${note.id}" title="สแกน QR Code เพื่อเปิดบนมือถือ" aria-label="สแกน QR Code เพื่อเปิดบนมือถือ">
+          <i class="fa-solid fa-qrcode"></i>
+        </button>
+        <button class="btn-card-action btn-copy-link" data-url="${note.url}" title="คัดลอกลิงก์" aria-label="คัดลอกลิงก์">
           <i class="fa-regular fa-copy"></i>
         </button>
         <a href="${note.url}" target="_blank" rel="noopener noreferrer" class="btn-open-site" title="เปิดอ่านเว็บไซต์สรุป">
@@ -387,6 +401,15 @@ function createNoteCardElement(note, isFav) {
     e.stopPropagation();
     toggleFavorite(note.id);
   });
+
+  // QR Code Button
+  const qrBtn = card.querySelector('.btn-qr-code');
+  if (qrBtn) {
+    qrBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openQrModal(note);
+    });
+  }
 
   // Copy Link Button
   const copyBtn = card.querySelector('.btn-copy-link');
@@ -531,6 +554,40 @@ function showToast(message, type = 'success') {
 }
 
 /**
+ * QR Code Modal Handlers
+ */
+function openQrModal(note) {
+  if (!elements.qrModal) return;
+  if (elements.qrModalTitle) elements.qrModalTitle.textContent = note.title;
+  if (elements.qrModalSubtitle) elements.qrModalSubtitle.textContent = `${note.categoryName || ''} • เปิดอ่านบนสมาร์ตโฟน`;
+  if (elements.qrUrlInput) elements.qrUrlInput.value = note.url;
+  if (elements.qrDirectLink) elements.qrDirectLink.href = note.url;
+
+  if (elements.qrSpinner) elements.qrSpinner.style.display = 'flex';
+  if (elements.qrCodeImg) {
+    elements.qrCodeImg.style.opacity = '0';
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=10&data=${encodeURIComponent(note.url)}`;
+    elements.qrCodeImg.src = qrUrl;
+    elements.qrCodeImg.onload = () => {
+      if (elements.qrSpinner) elements.qrSpinner.style.display = 'none';
+      elements.qrCodeImg.style.opacity = '1';
+    };
+    elements.qrCodeImg.onerror = () => {
+      if (elements.qrSpinner) elements.qrSpinner.style.display = 'none';
+      elements.qrCodeImg.style.opacity = '1';
+    };
+  }
+
+  elements.qrModal.style.display = 'flex';
+}
+
+function closeQrModal() {
+  if (elements.qrModal) {
+    elements.qrModal.style.display = 'none';
+  }
+}
+
+/**
  * Reset All Filters
  */
 function resetAllFilters() {
@@ -617,7 +674,9 @@ function setupEventListeners() {
       elements.searchInput.focus();
       elements.searchInput.select();
     } else if (e.key === 'Escape') {
-      if (elements.howToAddModal.style.display !== 'none') {
+      if (elements.qrModal && elements.qrModal.style.display !== 'none') {
+        closeQrModal();
+      } else if (elements.howToAddModal && elements.howToAddModal.style.display !== 'none') {
         elements.howToAddModal.style.display = 'none';
       } else if (elements.searchInput.value !== '') {
         elements.searchInput.value = '';
@@ -687,6 +746,24 @@ function setupEventListeners() {
     elements.howToAddModal.addEventListener('click', (e) => {
       if (e.target === elements.howToAddModal) {
         elements.howToAddModal.style.display = 'none';
+      }
+    });
+  }
+
+  // QR Modal Listeners
+  if (elements.closeQrModal) elements.closeQrModal.addEventListener('click', closeQrModal);
+  if (elements.qrCloseBtn) elements.qrCloseBtn.addEventListener('click', closeQrModal);
+  if (elements.qrModal) {
+    elements.qrModal.addEventListener('click', (e) => {
+      if (e.target === elements.qrModal) {
+        closeQrModal();
+      }
+    });
+  }
+  if (elements.qrCopyBtn) {
+    elements.qrCopyBtn.addEventListener('click', () => {
+      if (elements.qrUrlInput && elements.qrUrlInput.value) {
+        copyToClipboard(elements.qrUrlInput.value);
       }
     });
   }
