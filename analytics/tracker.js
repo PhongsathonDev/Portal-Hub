@@ -54,20 +54,47 @@
     });
   }
 
+  // Safe Storage Access (ทนทานต่อ file://, Private Mode, และการบล็อก Third-party Storage)
+  let _memorySessionId = null;
+  let _memoryVisitorId = null;
+  const _memoryStore = {};
+
+  function safeGetItem(type, key) {
+    try {
+      const storage = type === 'session' ? window.sessionStorage : window.localStorage;
+      return storage ? storage.getItem(key) : _memoryStore[key] || null;
+    } catch (e) {
+      return _memoryStore[key] || null;
+    }
+  }
+
+  function safeSetItem(type, key, value) {
+    try {
+      const storage = type === 'session' ? window.sessionStorage : window.localStorage;
+      if (storage) {
+        storage.setItem(key, value);
+        return;
+      }
+    } catch (e) {}
+    _memoryStore[key] = String(value);
+  }
+
   function getSessionId() {
-    let sid = sessionStorage.getItem('va_session_id');
+    let sid = safeGetItem('session', 'va_session_id') || _memorySessionId;
     if (!sid) {
       sid = 'sess_' + Math.random().toString(36).substring(2, 10) + '_' + Date.now();
-      sessionStorage.setItem('va_session_id', sid);
+      safeSetItem('session', 'va_session_id', sid);
+      _memorySessionId = sid;
     }
     return sid;
   }
 
   function getVisitorId() {
-    let vid = localStorage.getItem('va_visitor_id');
+    let vid = safeGetItem('local', 'va_visitor_id') || _memoryVisitorId;
     if (!vid) {
       vid = 'vis_' + Math.random().toString(36).substring(2, 12) + '_' + Date.now();
-      localStorage.setItem('va_visitor_id', vid);
+      safeSetItem('local', 'va_visitor_id', vid);
+      _memoryVisitorId = vid;
     }
     return vid;
   }
@@ -270,9 +297,9 @@
     const hour = String(new Date().getHours()).padStart(2, '0');
 
     const dailyVisitorKey = `va_seen_${siteId}_${today}`;
-    const isNewToday = !localStorage.getItem(dailyVisitorKey);
+    const isNewToday = !safeGetItem('local', dailyVisitorKey);
     if (isNewToday) {
-      localStorage.setItem(dailyVisitorKey, '1');
+      safeSetItem('local', dailyVisitorKey, '1');
     }
 
     const dayStatsRef = db.ref(`analytics/stats/${siteId}/${today}`);
