@@ -34,22 +34,16 @@
 
   // Helper โหลด Script แบบ Promise
   function loadScript(src) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const existing = document.querySelector(`script[src="${src}"]`);
       if (existing) {
-        if (existing.getAttribute('data-loaded') === 'true') return resolve();
-        existing.addEventListener('load', () => resolve());
-        existing.addEventListener('error', (err) => reject(err));
-        return;
+        return resolve();
       }
       const s = document.createElement('script');
       s.src = src;
       s.async = true;
-      s.onload = () => {
-        s.setAttribute('data-loaded', 'true');
-        resolve();
-      };
-      s.onerror = (err) => reject(err);
+      s.onload = () => resolve();
+      s.onerror = () => resolve();
       document.head.appendChild(s);
     });
   }
@@ -215,12 +209,19 @@
       const siteTitle = customSiteTitle || document.title || 'ศูนย์รวมสรุปใบความรู้ (Study Notes Hub)';
       window.ANALYTICS_ACTIVE_SITE = siteId;
 
-      // โหลด Firebase SDKs
+      // โหลด Firebase SDKs (ถ้ายังไม่มี)
       if (!window.firebase) {
         await loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
       }
-      if (!window.firebase?.database) {
+      if (!window.firebase || !window.firebase.database) {
         await loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js');
+      }
+
+      // รอจนกว่า firebase.database พร้อม (ไม่เกิน 2 วินาที)
+      let waitTimes = 0;
+      while ((!window.firebase || !window.firebase.database) && waitTimes < 20) {
+        await new Promise((r) => setTimeout(r, 100));
+        waitTimes++;
       }
 
       const db = ensureFirebaseApp();
@@ -228,16 +229,16 @@
 
       const tech = detectClientTech();
 
-      // บันทึกข้อมูล Site
+      // บันทึกข้อมูล Site ทันที
       db.ref(`analytics/sites/${siteId}`).update({
         id: siteId,
         title: siteTitle,
         lastSeen: Date.now(),
-        origin: location.origin,
-        path: location.pathname
+        origin: location.origin || 'unknown',
+        path: location.pathname || '/'
       }).catch(() => {});
 
-      // ตรวจจับ Real-time Presence
+      // ตรวจจับ Real-time Presence ทันที
       setupPresence(db, siteId, siteTitle, tech);
 
       // บันทึกสถิติการเปิดหน้าเว็บ
@@ -257,34 +258,39 @@
     const presenceRef = db.ref(`analytics/presence/${siteId}/${sessionId}`);
     const connectedRef = db.ref('.info/connected');
 
+    const presenceData = {
+      sessionId: sessionId,
+      visitorId: visitorId,
+      joinedAt: Date.now(),
+      lastSeen: Date.now(),
+      page: location.pathname || '/',
+      title: siteTitle,
+      device: tech.device,
+      os: tech.os,
+      browser: tech.browser,
+      screen: tech.screenRes,
+      currentScroll: maxScrollDepth
+    };
+
+    // ส่งสถานะ Presence ทันทีไม่ต้องรอ connected handshake
+    presenceRef.set(presenceData).catch(() => {});
+    presenceRef.onDisconnect().remove();
+
     connectedRef.on('value', (snap) => {
       if (snap.val() === true) {
         presenceRef.onDisconnect().remove();
-
-        presenceRef.set({
-          sessionId: sessionId,
-          visitorId: visitorId,
-          joinedAt: Date.now(),
-          lastSeen: Date.now(),
-          page: location.pathname,
-          title: siteTitle,
-          device: tech.device,
-          os: tech.os,
-          browser: tech.browser,
-          screen: tech.screenRes,
-          currentScroll: maxScrollDepth
-        }).catch(() => {});
+        presenceRef.set(presenceData).catch(() => {});
       }
     });
 
-    // Heartbeat ทุก 45 วินาที พร้อมอัปเดต Scroll Depth
+    // Heartbeat ทุก 30 วินาที พร้อมอัปเดต Scroll Depth
     const heartbeatTimer = setInterval(() => {
       trackScroll();
       presenceRef.update({
         lastSeen: Date.now(),
         currentScroll: maxScrollDepth
       }).catch(() => {});
-    }, 45000);
+    }, 30000);
 
     window.addEventListener('beforeunload', () => {
       clearInterval(heartbeatTimer);
