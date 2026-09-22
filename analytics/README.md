@@ -40,11 +40,11 @@ Firebase SDK
 
 ---
 
-## 🚀 วิธีนำ Tracker ไปแปะในเว็บอื่นๆ
+## 🚀 วิธีนำไปแปะในเว็บสรุปบทเรียนหรือเว็บอื่นๆ
 
-เพียงใส่แท็ก `<script>` นี้ไว้ก่อนปิด `</body>` ในหน้าเว็บที่คุณต้องการเก็บสถิติ:
+ใส่แท็ก `<script>` นี้ไว้ก่อนปิด `</body>` ในหน้าเว็บที่คุณต้องการ (แนะนำใช้ `data/activity.js` ซึ่งป้องกันการถูก Ad Blocker บล็อก 100%):
 
 ```html
-<script src="https://phongsathondev.github.io/Portal-Hub/analytics/tracker.js" data-site="รหัสเว็บของคุณ" data-title="ชื่อเว็บของคุณ"></script>
+<script src="https://phongsathondev.github.io/Portal-Hub/data/activity.js" data-site="รหัสเว็บของคุณ" data-title="ชื่อเว็บของคุณ"></script>
 ```
-*ระบบจะเริ่มส่งสถิติขึ้น Firebase และคุณจะสามารถเปิดดูสถิติของเว็บนั้นผ่านหน้า `tracker/index.html` บนเครื่องคุณได้ทันที!*
+*ระบบจะเริ่มส่งสถิติและสถานะออนไลน์ขึ้น Firebase และคุณจะสามารถเปิดดูสถิติผ่านหน้า `tracker/index.html` บนเครื่องคุณได้ทันที!*
