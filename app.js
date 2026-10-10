@@ -246,7 +246,7 @@ function getFilteredNotes() {
       if (a.isFeatured !== b.isFeatured) {
         return a.isFeatured ? -1 : 1;
       }
-      return new Date(b.updatedAt) - new Date(a.updatedAt);
+      return knowledgeSheetsData.indexOf(a) - knowledgeSheetsData.indexOf(b);
     } else if (state.sortBy === 'latest') {
       return new Date(b.updatedAt) - new Date(a.updatedAt);
     } else if (state.sortBy === 'titleAsc') {

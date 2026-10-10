@@ -25,7 +25,7 @@ const knowledgeSheetsData = [
     tags: ["CS3106", "Instruction Cycle", "System Bus", "DMA", "Cache"],
     icon: "fa-server",
     themeColor: "blue",
-    updatedAt: "2026-08-26",
+    updatedAt: "2026-08-22",
     isFeatured: true,
     sheetCount: "12 โมดูล (30 หน้า)"
   },
@@ -41,7 +41,7 @@ const knowledgeSheetsData = [
     tags: ["CS3106", "เลขฐาน", "2's Complement", "ASCII", "Data Flow"],
     icon: "fa-calculator",
     themeColor: "purple",
-    updatedAt: "2026-08-26",
+    updatedAt: "2026-08-29",
     isFeatured: true,
     sheetCount: "8 โมดูล (52 หน้า)"
   },
@@ -57,7 +57,7 @@ const knowledgeSheetsData = [
     tags: ["CS3106", "ชุดคำสั่ง CPU", "Addressing Modes", "8-State Cycle"],
     icon: "fa-gears",
     themeColor: "teal",
-    updatedAt: "2026-08-26",
+    updatedAt: "2026-09-05",
     isFeatured: true,
     sheetCount: "12 โมดูล (40 หน้า)"
   },
@@ -73,7 +73,7 @@ const knowledgeSheetsData = [
     tags: ["CS3106", "Microprocessor", "CISC vs RISC", "Registers & Flags", "Interrupt", "CPU Simulator"],
     icon: "fa-microchip",
     themeColor: "amber",
-    updatedAt: "2026-09-20",
+    updatedAt: "2026-09-12",
     isFeatured: true,
     sheetCount: "12 โมดูล (32 หน้า, 30 ข้อสอบ)"
   },
@@ -89,7 +89,7 @@ const knowledgeSheetsData = [
     tags: ["CS3106", "System Bus", "I/O Module", "Interrupt Controller", "DMA"],
     icon: "fa-network-wired",
     themeColor: "indigo",
-    updatedAt: "2026-09-20",
+    updatedAt: "2026-09-19",
     isFeatured: true,
     sheetCount: "12 โมดูล (48 หน้า, 50 ข้อสอบ)"
   },
@@ -105,7 +105,7 @@ const knowledgeSheetsData = [
     tags: ["CS3106", "ALU", "Adder", "Booth Algorithm", "Restoring Division", "IEEE 754"],
     icon: "fa-calculator",
     themeColor: "cyan",
-    updatedAt: "2026-09-20",
+    updatedAt: "2026-09-26",
     isFeatured: true,
     sheetCount: "7 โมดูล (77 หน้า, 68 ข้อสอบ)"
   },
@@ -121,9 +121,25 @@ const knowledgeSheetsData = [
     tags: ["CS3106", "Memory Hierarchy", "SRAM vs DRAM", "Cache Mapping", "Virtual Memory", "Paging"],
     icon: "fa-memory",
     themeColor: "emerald",
-    updatedAt: "2026-09-20",
+    updatedAt: "2026-10-03",
     isFeatured: true,
     sheetCount: "12 โมดูล (94 หน้า, 96 ข้อสอบ)"
+  },
+  {
+    id: "cs3106-ch8-pipeline",
+    title: "บทที่ 8: การทำงานแบบไปป์ลายน์ (Pipeline)",
+    category: "computer",
+    categoryName: "CS 3106 โครงสร้างระบบคอมพิวเตอร์",
+    year: 1,
+    semester: 1,
+    description: "สถาปัตยกรรม 5-Stage Pipeline (IF/ID/EX/MEM/WB), Speedup, Structural/Data/Control Hazards, Data Forwarding, Branch Prediction และ Superscalar",
+    url: "https://phongsathondev.github.io/Chapter8-Pipeline/",
+    tags: ["CS3106", "Pipeline", "5-Stage", "Hazards", "Data Forwarding", "Branch Prediction", "Speedup"],
+    icon: "fa-bolt",
+    themeColor: "violet",
+    updatedAt: "2026-10-10",
+    isFeatured: true,
+    sheetCount: "9 โมดูล (52 ข้อสอบ, 22 แฟลชการ์ด)"
   },
   {
     id: "edu-020033401-language-for-teachers",
@@ -137,7 +153,7 @@ const knowledgeSheetsData = [
     tags: ["020033401", "ภาษาเพื่อการสื่อสาร", "วิชาชีพครู", "จับใจความ"],
     icon: "fa-chalkboard-user",
     themeColor: "rose",
-    updatedAt: "2026-08-26",
+    updatedAt: "2026-08-15",
     isFeatured: true,
     sheetCount: "8 หน่วยการเรียนรู้"
   }

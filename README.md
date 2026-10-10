@@ -28,6 +28,7 @@
 | **CS 3106 บทที่ 5: ไมโครโปรเซสเซอร์และการเชื่อมต่อระบบบัส** | System Bus (Address/Data/Control), I/O Port Addressing, Interrupt Controller, DMA | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter5-Microprocessor-and-Bus-System/) |
 | **CS 3106 บทที่ 6: หน่วยคำนวณทางคณิตศาสตร์และตรรกะ (ALU)** | วงจรบวก Adder, Booth's Multiplier, Restoring Division, มาตรฐาน IEEE 754 | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter6-Arithmetic-and-Logic-Unit/) |
 | **CS 3106 บทที่ 7: หน่วยความจำ (Memory Unit)** | ลำดับขั้นหน่วยความจำ, SRAM/DRAM, Server DIMMs, แคช Mapping, Virtual Memory, Paging | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter7-Memory-Unit/) |
+| **CS 3106 บทที่ 8: การทำงานแบบไปป์ลายน์ (Pipeline)** | สถาปัตยกรรม 5-Stage Pipeline, Speedup/Throughput, Hazards, Data Forwarding, Branch Prediction, Superscalar | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Chapter8-Pipeline/) |
 | **020033401 ภาษาเพื่อการสื่อสารสำหรับครู** | วัจน/อวัจนภาษา, ทักษะ ฟัง พูด อ่าน เขียน, การจับใจความ และการเขียนสรุปความ | [เข้าสู่บทเรียน](https://phongsathondev.github.io/Language-for-Communication-for-Teachers/) |
 
 ---
